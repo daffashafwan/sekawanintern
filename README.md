@@ -65,6 +65,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 
 ## Tambahan
+Framework : Laravel 8
+PHP 8
+Mysql 8.0.26
 Berikut adalah link panduan penggunaan aplikasi
 https://docs.google.com/document/d/1NAkjO3pMKqfmazxTdcwOpmiZH8qCGOsakKOEisGh574/edit?usp=sharing
 Berikut adalah desain database
