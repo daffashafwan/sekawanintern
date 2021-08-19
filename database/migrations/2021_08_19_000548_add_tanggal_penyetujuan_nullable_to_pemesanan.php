@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePenyetujusTable extends Migration
+class AddTanggalPenyetujuanNullableToPemesanan extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreatePenyetujusTable extends Migration
      */
     public function up()
     {
-        Schema::create('penyetuju', function (Blueprint $table) {
-            $table->id();
-            $table->string("username");
-            $table->string("password");
-            $table->string("nama")->nullable();
-            $table->timestamps();
+        Schema::table('pemesanan', function (Blueprint $table) {
+            $table->datetime('tanggal_penyetujuan')->nullable()->change();
         });
     }
 
@@ -29,6 +25,8 @@ class CreatePenyetujusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penyetuju');
+        Schema::table('pemesanan', function (Blueprint $table) {
+            $table->dropColumn('tanggal_penyetujuan');
+        });
     }
 }

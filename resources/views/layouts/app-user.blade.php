@@ -4,8 +4,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Halaman Admin</title>
-
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -39,7 +37,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  href="{{route('auth.admin.logout')}}" role="button">
+        <a class="nav-link"  href="{{route('auth.penyetuju.logout')}}" rgotole="button">
           <i class="fas fa-arrow-left"></i>
         </a>
       </li>
@@ -57,7 +55,7 @@
           <img src="{{asset('AdminLTE-3.1.0/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">Admin</a>
+            <a href="#" class="d-block">Penyetuju</a>
           </div>
       </div>
 
@@ -74,40 +72,6 @@
                 </p>
             </a>
             </li>
-          <li class="nav-header">HOME</li>
-          <li class="nav-item">
-            <a href="{{route('admin.pemesanan.index')}}" class="nav-link">
-              <i class="nav-icon far fa-clipboard"></i>
-              <p>
-                Data Pemesanan
-                {{-- <span class="badge badge-info right">2</span> --}}
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('admin.kendaraan.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-car"></i>
-              <p>
-                Data Kendaraan
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('admin.driver.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Data Supir
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('admin.penyetuju.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-user-check"></i>
-              <p>
-                Data Penyetuju
-              </p>
-            </a>
-          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

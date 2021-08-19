@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="card-body">
-          Start creating your amazing application!
+            <canvas id="canvas" height="280" width="600"></canvas>
         </div>
         <!-- /.card-body -->
         <div class="card-footer">
@@ -25,3 +25,43 @@
       </div>
       <!-- /.card -->
 @endsection
+@push('script')
+
+@endpush
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script>
+    var kendaraan = <?php echo $kendaraan; ?>;
+    var user = <?php echo $pemesanan; ?>;
+    var barChartData = {
+        labels: kendaraan,
+        datasets: [{
+            label: 'Kendaraan',
+            backgroundColor: "pink",
+            data: user
+        }]
+    };
+
+    window.onload = function() {
+        var ctx = document.getElementById("canvas").getContext("2d");
+        window.myBar = new Chart(ctx, {
+            type: 'bar',
+            data: barChartData,
+            options: {
+                elements: {
+                    rectangle: {
+                        borderWidth: 2,
+                        borderColor: '#c1c1c1',
+                        borderSkipped: 'bottom'
+                    }
+                },
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Statistik Penggunaan Kendaraan'
+                }
+            }
+        });
+    };
+</script>
+

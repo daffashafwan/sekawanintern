@@ -18,8 +18,12 @@
               <thead>
               <tr>
                 <th>No</th>
-                <th>Nama pemesanan</th>
-                <th>Username</th>
+                <th>Waktu pemesanan</th>
+                <th>Kendaraaan</th>
+                <th>Pemakaian Bensin</th>
+                <th>Driver</th>
+                <th>Penyetuju</th>
+                <th>Status</th>
                 <th>Aksi</th>
               </tr>
               </thead>
@@ -27,13 +31,17 @@
                 @foreach ($pemesanan as $p)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$p->nama}}</td>
-                        <td>{{$p->username}}</td>
+                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $p->waktu_pemesanan)->format('d M Y')}}</td>
+                        <td>{{$p->Kendaraan->nama}}</td>
+                        <td>{{$p->Kendaraan->bensin}}</td>
+                        <td>{{$p->Driver->nama}}</td>
+                        <td>{{$p->Penyetuju->nama}}</td>
+                        <td>{{$p->status == 0 ? 'Belum Disetujui' : ($p->status == 1 ? 'Disetujui' : 'Tidak Disetujui')}}</td>
                         <td>
-                            <a type="button" class="btn ml-1 mr-1 mt-1 mb-1 btn-secondary ModalEdit" data-toggle="modal" data-id="{{$p->id}}" data-target="#modal-default-edit">
+                            <a style="visibility: <?php echo($p->status == 0 ? 'visible' : 'hidden')?>" type="button" data-toggle="modal" class="btn ml-1 mr-1 mt-1 mb-1 btn-secondary ModalEdit" data-id="{{$p->id}}" data-target="#modal-default-edit">
                                  Edit
                             </a>
-                            <a type="button" class="btn ml-1 mr-1 mt-1 mb-1 btn-danger ModalDelete" data-toggle="modal" data-ids="{{$p->id}}" data-target="#modal-default-hapus">
+                            <a style="visibility: <?php echo($p->status == 0 ? 'visible' : 'hidden')?>" type="button" data-toggle="modal" class="btn ml-1 mr-1 mt-1 mb-1 btn-danger ModalDelete" data-ids="{{$p->id}}" data-target="#modal-default-hapus">
                                 Delete
                             </a>
                         </td>
@@ -44,8 +52,12 @@
               <tfoot>
               <tr>
                 <th>No</th>
-                <th>Nama pemesanan</th>
-                <th>Username</th>
+                <th>Waktu pemesanan</th>
+                <th>Kendaraaan</th>
+                <th>Pemakaian Bensin</th>
+                <th>Driver</th>
+                <th>Penyetuju</th>
+                <th>Status</th>
                 <th>Aksi</th>
               </tr>
               </tfoot>
@@ -70,16 +82,32 @@
             <form action="{{route('admin.pemesanan.tambah')}}" method="POST">
                 @csrf
                   <div class="form-group">
-                    <label for="nama">Nama pemesanan</label>
-                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama pemesanan">
+                    <label for="waktu_pemesanan">Tanggal pemesanan</label>
+                    <input type="date" class="form-control" id="waktu_pemesanan" name="waktu_pemesanan">
                   </div>
                   <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan Alamat">
+                    <label for="kendaraan">Kendaraan</label>
+                    <select name="kendaraan" class="custom-select form-control" id="kendaraan">
+                        @foreach ($kendaraan as $k)
+                            <option value="{{$k->id}}">{{$k->nama}}</option>
+                        @endforeach
+                    </select>
                   </div>
                   <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="text" class="form-control" id="password" name="password" placeholder="Masukkan No. Telepon">
+                    <label for="driver">Penyetuju</label>
+                    <select name="penyetuju" class="custom-select form-control" id="penyetuju">
+                        @foreach ($penyetuju as $p)
+                            <option value="{{$p->id}}">{{$p->nama}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="driver">Driver</label>
+                    <select name="driver" class="custom-select form-control" id="driver">
+                        @foreach ($driver as $d)
+                            <option value="{{$d->id}}">{{$d->nama}}</option>
+                        @endforeach
+                    </select>
                   </div>
         </div>
         <div class="modal-footer justify-content-between">
@@ -107,17 +135,33 @@
             <form action="{{route('admin.pemesanan.edit')}}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label for="nama">Nama pemesanan</label>
+                    <label for="waktu_pemesanan">Waktu pemesanan</label>
                     <input type="hidden" name="id" id="id">
-                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama pemesanan">
+                    <input type="date" class="form-control" id="waktu_pemesanan" name="waktu_pemesanan">
                   </div>
                   <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan Username Akun pemesanan">
+                    <label for="kendaraan">Kendaraan</label>
+                    <select name="kendaraan" class="custom-select form-control" id="kendaraan">
+                        @foreach ($kendaraan as $k)
+                            <option value="{{$k->id}}">{{$k->nama}}</option>
+                        @endforeach
+                    </select>
                   </div>
                   <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="text" class="form-control" id="password" name="password" placeholder="Masukkan Password Akun pemesanan">
+                    <label for="driver">Penyetuju</label>
+                    <select name="penyetuju" class="custom-select form-control" id="penyetuju">
+                        @foreach ($penyetuju as $p)
+                            <option value="{{$p->id}}">{{$p->nama}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="driver">Driver</label>
+                    <select name="driver" class="custom-select form-control" id="driver">
+                        @foreach ($driver as $d)
+                            <option value="{{$d->id}}">{{$d->nama}}</option>
+                        @endforeach
+                    </select>
                   </div>
         </div>
         <div class="modal-footer justify-content-between">
@@ -172,15 +216,19 @@
 
         });
           $(function () {
-                $('#example1').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-                });
+            $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                // $('#example1').DataTable({
+                // "paging": true,
+                // "lengthChange": false,
+                // "searching": true,
+                // "ordering": true,
+                // "info": true,
+                // "autoWidth": false,
+                // "responsive": true,
+                // });
             });
       </script>
 @endpush

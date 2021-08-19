@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\KendaraanController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\PenyetujuController;
 use App\Http\Controllers\Admin\PemesananController;
+use App\Http\Controllers\Penyetuju\DashboardController as PenyetujuDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,11 @@ Route::prefix('admin')->middleware('admin')->group(function (){
         Route::get('/', [PemesananController::class, 'index'])->name('admin.pemesanan.index');
         Route::post('/tambah', [PemesananController::class, 'tambah'])->name('admin.pemesanan.tambah');
         Route::post('/edit', [PemesananController::class, 'edit'])->name('admin.pemesanan.edit');
-        Route::delete('/delete/{pid}', [PemesananController::class, 'hapus'])->name('admin.pemesanan.hapus');
+        Route::delete('/delete/{pesid}', [PemesananController::class, 'hapus'])->name('admin.pemesanan.hapus');
     });
+});
+
+Route::prefix('penyetuju')->middleware('penyetuju')->group(function (){
+    Route::get('/', [PenyetujuDashboardController::class, 'index'])->name('penyetuju.dashboard.index');
+    Route::post('/penyetujuan', [PenyetujuDashboardController::class, 'penyetujuan'])->name('penyetuju.dashboard.penyetujuan');
 });
